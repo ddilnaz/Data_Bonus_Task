@@ -146,7 +146,7 @@ def ensure_topic(admin_client: KafkaAdminClient, topic_name: str):
     except TopicAlreadyExistsError:
         print(f"Topic '{topic_name}' already exists")
     except Exception as e:
-        print(f"Topic creation warning/failed: {e}")
+        print(f"Topic creation failed: {e}")
 
 def produce_to_kafka(df: pd.DataFrame, bootstrap: str, topic: str):
  
@@ -192,7 +192,7 @@ def main():
     cleaned = clean_df(combined)
     print(f"Cleaned rows: {len(cleaned)}")
     if len(cleaned) < 20:
-        print("Warning: less than 20 rows after cleaning. You may want to adjust heuristics.")
+        print("Warning: less than 20 rows after cleaning.")
     
     cleaned.to_csv(OUTPUT_CSV, index=False)
     print(f"Saved cleaned data to {OUTPUT_CSV}")
@@ -201,7 +201,6 @@ def main():
         produce_to_kafka(cleaned, KAFKA_BOOTSTRAP, TOPIC)
     except Exception as e:
         print(f"Kafka produce error: {e}")
-        print("Make sure Kafka broker is running at", KAFKA_BOOTSTRAP)
 
 if __name__ == "__main__":
     main()
