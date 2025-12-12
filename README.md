@@ -70,18 +70,3 @@ python script.py
 
 The script will print progress messages as it scrapes, cleans, and sends data to Kafka.
 
-## Verifying the Data
-
-To check if messages made it to Kafka:
-
-```bash
-# See if the topic exists
-docker exec -it bonus_dta-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
-
-# Read some messages
-docker exec -it bonus_dta-kafka-1 kafka-console-consumer \
-  --bootstrap-server localhost:9092 \
-  --topic bonus_22b031177 \
-  --from-beginning \
-  --max-messages 10
-```
